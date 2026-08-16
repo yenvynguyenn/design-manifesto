@@ -1,197 +1,582 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vintage Photo Booth ♡</title>
+<title>⋆˚꩜｡ photo booth</title>
+
+<!-- Handwritten fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Patrick+Hand&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
+
 * {
     box-sizing: border-box;
+}
+
+:root {
+    --paper: #f3f0e8;
+    --ink: #252525;
+    --soft-ink: #66615a;
+    --white: #faf9f4;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
-    background: #eee7df;
-    color: #3b3029;
-    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0,0,0,.035) 0 1px, transparent 1px),
+        radial-gradient(circle at 70% 80%, rgba(0,0,0,.025) 0 1px, transparent 1px),
+        var(--paper);
+
+    background-size: 18px 18px, 25px 25px;
+
+    color: var(--ink);
+
+    font-family: "Patrick Hand", cursive;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+
+    padding: 30px 18px;
+
+    overflow-x: hidden;
 }
+
+
+/* =====================================
+   MAIN
+===================================== */
 
 .booth {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1050px;
+
+    position: relative;
+
     text-align: center;
 }
 
-h1 {
-    font-family: Georgia, serif;
-    font-size: 48px;
-    margin: 0;
+
+/* =====================================
+   LITTLE DOODLES
+===================================== */
+
+.doodle {
+    position: absolute;
+
+    font-family: "Caveat", cursive;
+
+    color: var(--ink);
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+.doodle.one {
+    top: -20px;
+    left: 5%;
+
+    font-size: 28px;
+
+    transform: rotate(-12deg);
+}
+
+.doodle.two {
+    top: 90px;
+    right: 5%;
+
+    font-size: 25px;
+
+    transform: rotate(9deg);
+}
+
+.doodle.three {
+    bottom: 60px;
+    left: 3%;
+
+    font-size: 25px;
+
+    transform: rotate(8deg);
+}
+
+.doodle.four {
+    bottom: 10px;
+    right: 6%;
+
+    font-size: 24px;
+
+    transform: rotate(-8deg);
+}
+
+
+/* =====================================
+   TITLE
+===================================== */
+
+.title-small {
+    font-family: "DM Mono", monospace;
+
+    font-size: 10px;
+
     letter-spacing: 3px;
+
+    margin-bottom: 2px;
+
+    opacity: .65;
+}
+
+h1 {
+    margin: 0;
+
+    font-family: "Caveat", cursive;
+
+    font-size: clamp(55px, 9vw, 90px);
+
+    font-weight: 600;
+
+    line-height: .8;
+
+    transform: rotate(-2deg);
 }
 
 .subtitle {
-    margin: 8px 0 30px;
-    font-size: 12px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
+    margin-top: 15px;
+
+    font-family: "Patrick Hand", cursive;
+
+    font-size: 20px;
+
+    color: var(--soft-ink);
+
+    transform: rotate(1deg);
 }
+
+.subtitle span {
+    font-family: "DM Mono", monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================
+   CAMERA LAYOUT
+===================================== */
 
 .camera-area {
     display: flex;
+
     justify-content: center;
+
     align-items: center;
-    gap: 50px;
+
+    gap: 70px;
+
     flex-wrap: wrap;
+
+    margin-top: 35px;
 }
 
-.camera-container {
+
+/* =====================================
+   CAMERA
+===================================== */
+
+.camera-section {
     position: relative;
-    width: 550px;
-    max-width: 90vw;
-    background: #211c19;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 15px 35px rgba(0,0,0,.2);
 }
+
+.camera-frame {
+    position: relative;
+
+    width: min(560px, 92vw);
+
+    padding: 12px;
+
+    background: #1d1d1d;
+
+    transform: rotate(-1deg);
+
+    box-shadow:
+        4px 5px 0 rgba(0,0,0,.12),
+        0 15px 35px rgba(0,0,0,.15);
+}
+
+
+/* little tape */
+
+.camera-frame::before {
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 24px;
+
+    background: rgba(235,230,211,.85);
+
+    top: -12px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        rotate(-2deg);
+
+    z-index: 5;
+
+    opacity: .8;
+}
+
 
 video {
     width: 100%;
-    display: block;
-    border-radius: 4px;
 
-    /* Mirror the camera like a real selfie camera */
+    display: block;
+
+    aspect-ratio: 4 / 3;
+
+    object-fit: cover;
+
+    background: #111;
+
     transform: scaleX(-1);
 
-    /* Vintage look */
-    filter: sepia(.15)
-            contrast(.95)
-            saturate(.8);
+    /* actual black and white preview */
+    filter:
+        grayscale(1)
+        contrast(1.08)
+        brightness(.98);
 }
+
+
+/* =====================================
+   COUNTDOWN
+===================================== */
 
 .countdown {
     position: absolute;
+
     inset: 0;
 
     display: flex;
-    align-items: center;
+
     justify-content: center;
 
-    color: white;
-    font-family: Georgia, serif;
-    font-size: 110px;
-    font-weight: bold;
+    align-items: center;
 
-    text-shadow: 0 4px 20px black;
+    color: white;
+
+    font-family: "Caveat", cursive;
+
+    font-size: 130px;
+
+    font-weight: 700;
+
+    text-shadow:
+        2px 2px 0 rgba(0,0,0,.5);
 
     opacity: 0;
+
     pointer-events: none;
+
+    transition: opacity .15s;
 }
 
 .countdown.show {
     opacity: 1;
 }
 
+
+/* =====================================
+   CAMERA LABEL
+===================================== */
+
+.camera-label {
+    position: absolute;
+
+    bottom: -22px;
+    left: 12px;
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    transform: rotate(-2deg);
+
+    color: var(--soft-ink);
+}
+
+
+/* =====================================
+   BUTTONS
+===================================== */
+
 .controls {
-    margin-top: 20px;
+    margin-top: 35px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
 }
 
 button {
-    border: none;
-    padding: 14px 28px;
+    border: 1.5px solid var(--ink);
 
-    border-radius: 30px;
+    background: transparent;
 
-    background: #3b3029;
-    color: white;
+    color: var(--ink);
 
-    font-size: 13px;
-    letter-spacing: 1px;
+    padding: 10px 21px;
+
+    font-family: "Patrick Hand", cursive;
+
+    font-size: 18px;
 
     cursor: pointer;
 
-    transition: .2s;
+    border-radius: 4px;
+
+    transform: rotate(-1deg);
+
+    box-shadow: 2px 2px 0 var(--ink);
+
+    transition: .15s;
+}
+
+button:nth-child(even) {
+    transform: rotate(1deg);
 }
 
 button:hover {
-    background: #5a4940;
-    transform: translateY(-2px);
+    background: var(--ink);
+
+    color: white;
+
+    transform:
+        rotate(-1deg)
+        translateY(-2px);
+}
+
+button:active {
+    transform:
+        rotate(-1deg)
+        translate(2px, 2px);
+
+    box-shadow: none;
 }
 
 button:disabled {
-    opacity: .4;
+    opacity: .35;
+
     cursor: not-allowed;
-    transform: none;
+
+    box-shadow: none;
 }
 
 .status {
-    margin-top: 14px;
-    font-size: 13px;
-    letter-spacing: 1px;
+    margin-top: 15px;
+
+    font-size: 16px;
+
+    color: var(--soft-ink);
+
+    min-height: 22px;
 }
+
+
+/* =====================================
+   LITTLE INSTRUCTIONS
+===================================== */
 
 .instructions {
-    margin-top: 25px;
-    font-size: 12px;
-    opacity: .65;
+    margin-top: 40px;
+
+    font-family: "Caveat", cursive;
+
+    font-size: 20px;
+
+    transform: rotate(-1deg);
+
+    color: var(--soft-ink);
 }
 
-/* PHOTO STRIP */
+
+/* =====================================
+   STRIP
+===================================== */
 
 .strip-wrapper {
     display: none;
+
     justify-content: center;
+
+    position: relative;
 }
 
+.strip-container {
+    position: relative;
+}
+
+
+/* tape on strip */
+
+.strip-container::before {
+    content: "";
+
+    position: absolute;
+
+    width: 75px;
+    height: 20px;
+
+    background: rgba(230,225,207,.9);
+
+    top: -12px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        rotate(3deg);
+
+    z-index: 5;
+}
+
+
 .strip {
-    width: 240px;
+    width: 250px;
 
-    background: #fffaf3;
+    padding: 16px 14px 20px;
 
-    padding: 14px 14px 20px;
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,.03) 0 1px,
+            transparent 1px
+        ),
+        #faf9f4;
 
-    box-shadow: 0 15px 35px rgba(0,0,0,.2);
+    background-size: 13px 13px;
+
+    box-shadow:
+        5px 7px 0 rgba(0,0,0,.1),
+        0 15px 30px rgba(0,0,0,.15);
+
+    transform: rotate(2deg);
+}
+
+
+/* =====================================
+   STRIP HEADER
+===================================== */
+
+.strip-header {
+    margin-bottom: 12px;
+
+    text-align: center;
 }
 
 .strip-title {
-    font-family: Georgia, serif;
-    font-size: 17px;
+    font-family: "Caveat", cursive;
+
+    font-size: 27px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    transform: rotate(-2deg);
+}
+
+.strip-subtitle {
+    margin-top: 5px;
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 7px;
+
     letter-spacing: 2px;
 
-    margin-bottom: 12px;
+    color: #777;
 }
+
+
+/* =====================================
+   PHOTOS
+===================================== */
 
 .photo {
     width: 100%;
 
-    aspect-ratio: 1 / .75;
+    aspect-ratio: 4 / 3;
 
     object-fit: cover;
 
     display: block;
 
-    margin-bottom: 8px;
+    margin-bottom: 9px;
+
+    background: #ddd;
 
     filter:
-        sepia(.18)
-        contrast(.92)
-        saturate(.75);
+        grayscale(1)
+        contrast(1.1);
+
+    border: 1px solid #222;
 }
 
-.strip-date {
-    margin-top: 10px;
 
-    font-size: 9px;
+/* =====================================
+   STRIP FOOTER
+===================================== */
 
-    letter-spacing: 2px;
+.strip-footer {
+    margin-top: 11px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+
+    color: #666;
 }
+
+.doodle-mark {
+    font-family: "Caveat", cursive;
+
+    font-size: 18px;
+
+    letter-spacing: 0;
+}
+
+
+/* =====================================
+   HIDDEN
+===================================== */
 
 .hidden {
     display: none !important;
@@ -201,43 +586,93 @@ canvas {
     display: none;
 }
 
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
 @media (max-width: 700px) {
 
-    h1 {
-        font-size: 34px;
-    }
-
-    .camera-container {
-        width: 95vw;
+    body {
+        padding: 25px 12px;
     }
 
     .camera-area {
-        gap: 25px;
+        gap: 35px;
+    }
+
+    .doodle.one {
+        left: 1%;
+    }
+
+    .doodle.two {
+        right: 1%;
+    }
+
+    .instructions {
+        margin-top: 30px;
     }
 }
+
 </style>
 </head>
 
 
 <body>
 
+
 <div class="booth">
 
-    <h1>VINTAGE BOOTH</h1>
+
+    <!-- FLOATING DOODLES -->
+
+    <div class="doodle one">
+        .✦ ݁˖
+    </div>
+
+    <div class="doodle two">
+        ❀.ೃ࿔*:･
+    </div>
+
+    <div class="doodle three">
+        𖦹
+    </div>
+
+    <div class="doodle four">
+        ⋆˚꩜｡
+    </div>
+
+
+    <!-- TITLE -->
+
+    <div class="title-small">
+        FILM ROLL 001
+    </div>
+
+    <h1>
+        photo booth
+    </h1>
 
     <div class="subtitle">
-        ♡ step inside ♡
+        tiny memories, four frames
+        <br>
+        <span>⋆˚꩜｡ black & white edition</span>
     </div>
+
 
 
     <div class="camera-area">
 
 
-        <!-- CAMERA SCREEN -->
+        <!-- =============================
+             CAMERA
+        ============================== -->
 
-        <div id="cameraSection">
+        <div
+            id="cameraSection"
+            class="camera-section">
 
-            <div class="camera-container">
+            <div class="camera-frame">
 
                 <video
                     id="video"
@@ -254,18 +689,21 @@ canvas {
             </div>
 
 
+            <div class="camera-label">
+                [ look here 𖦹 ]
+            </div>
+
+
             <div class="controls">
 
                 <button id="startButton">
-                    START BOOTH
+                    start ˚₊‧
                 </button>
 
                 <button
                     id="takeButton"
                     disabled>
-
-                    TAKE PHOTOS
-
+                    take 4 photos
                 </button>
 
             </div>
@@ -275,7 +713,7 @@ canvas {
                 id="status"
                 class="status">
 
-                Camera ready ♡
+                ⋆˚꩜｡ waiting for camera
 
             </div>
 
@@ -283,46 +721,68 @@ canvas {
 
 
 
-        <!-- FINISHED PHOTO STRIP -->
+        <!-- =============================
+             PHOTO STRIP
+        ============================== -->
 
         <div
             id="stripWrapper"
             class="strip-wrapper">
 
-            <div>
+            <div class="strip-container">
 
-                <div
-                    id="strip"
-                    class="strip">
+                <div class="strip">
 
-                    <div class="strip-title">
-                        PHOTO BOOTH ♡
+
+                    <div class="strip-header">
+
+                        <div class="strip-title">
+                            photo booth
+                        </div>
+
+                        <div class="strip-subtitle">
+                            ⋆˚꩜｡ DEVELOPED IN THE MOMENT
+                        </div>
+
                     </div>
 
 
                     <img
                         id="photo1"
-                        class="photo">
+                        class="photo"
+                        alt="photo 1">
 
 
                     <img
                         id="photo2"
-                        class="photo">
+                        class="photo"
+                        alt="photo 2">
 
 
                     <img
                         id="photo3"
-                        class="photo">
+                        class="photo"
+                        alt="photo 3">
 
 
                     <img
                         id="photo4"
-                        class="photo">
+                        class="photo"
+                        alt="photo 4">
 
 
-                    <div
-                        id="date"
-                        class="strip-date">
+                    <div class="strip-footer">
+
+                        <span id="date"></span>
+
+                        <span class="doodle-mark">
+                            .✦ ݁˖
+                        </span>
+
+                        <span>
+                            ROLL 001
+                        </span>
+
                     </div>
 
                 </div>
@@ -331,11 +791,11 @@ canvas {
                 <div class="controls">
 
                     <button id="retakeButton">
-                        RETAKE
+                        ↻ retake
                     </button>
 
                     <button id="downloadButton">
-                        SAVE STRIP
+                        ↓ save strip
                     </button>
 
                 </div>
@@ -349,18 +809,19 @@ canvas {
 
     <div class="instructions">
 
-        Allow camera access →
-        press START →
-        pose 4 times →
-        save your strip ♡
+        allow camera access
+        → pose
+        → wait for the click
+        → repeat
+        <br>
+        ❀.ೃ࿔*:･ make something worth remembering .✦ ݁˖
 
     </div>
+
 
 </div>
 
 
-
-<!-- Canvas used to capture photos -->
 
 <canvas id="canvas"></canvas>
 
@@ -368,9 +829,9 @@ canvas {
 
 <script>
 
-/* ==============================
+/* =====================================
    ELEMENTS
-============================== */
+===================================== */
 
 const video =
     document.getElementById("video");
@@ -422,20 +883,34 @@ let capturedPhotos = [];
 
 
 
-/* ==============================
+/* =====================================
    START CAMERA
-============================== */
+===================================== */
 
 async function startCamera() {
+
+    /*
+       Check if browser supports camera
+    */
+
+    if (
+        !navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia
+    ) {
+
+        statusText.textContent =
+            "Camera unavailable — open the GitHub Pages HTTPS link.";
+
+        return;
+    }
+
 
     try {
 
         stream =
-            await navigator.mediaDevices
-            .getUserMedia({
+            await navigator.mediaDevices.getUserMedia({
 
                 video: {
-
                     width: {
                         ideal: 1280
                     },
@@ -445,7 +920,6 @@ async function startCamera() {
                     },
 
                     facingMode: "user"
-
                 },
 
                 audio: false
@@ -456,22 +930,54 @@ async function startCamera() {
         video.srcObject = stream;
 
 
+        await video.play();
+
+
         startButton.disabled = true;
 
         takeButton.disabled = false;
 
 
         statusText.textContent =
-            "Camera connected ♡ Press TAKE PHOTOS";
+            "camera ready ⋆˚꩜｡";
+
+    }
 
 
-    } catch (error) {
+    catch (error) {
 
-        console.error(error);
+        console.error(
+            "Camera error:",
+            error
+        );
 
 
-        statusText.textContent =
-            "Please allow camera access and refresh the page.";
+        if (
+            error.name ===
+            "NotAllowedError"
+        ) {
+
+            statusText.textContent =
+                "camera permission denied — allow access and try again.";
+
+        }
+
+        else if (
+            error.name ===
+            "NotFoundError"
+        ) {
+
+            statusText.textContent =
+                "no camera found on this device.";
+
+        }
+
+        else {
+
+            statusText.textContent =
+                "couldn't access camera — make sure you're using HTTPS.";
+
+        }
 
     }
 
@@ -479,9 +985,9 @@ async function startCamera() {
 
 
 
-/* ==============================
+/* =====================================
    COUNTDOWN
-============================== */
+===================================== */
 
 function runCountdown(seconds) {
 
@@ -493,7 +999,9 @@ function runCountdown(seconds) {
         countdown.textContent =
             number;
 
-        countdown.classList.add("show");
+        countdown.classList.add(
+            "show"
+        );
 
 
         const interval =
@@ -504,9 +1012,15 @@ function runCountdown(seconds) {
 
                 if (number <= 0) {
 
-                    clearInterval(interval);
+                    clearInterval(
+                        interval
+                    );
 
-                    countdown.classList.remove("show");
+
+                    countdown.classList.remove(
+                        "show"
+                    );
+
 
                     resolve();
 
@@ -527,9 +1041,9 @@ function runCountdown(seconds) {
 
 
 
-/* ==============================
-   CAPTURE PHOTO
-============================== */
+/* =====================================
+   BLACK & WHITE PHOTO
+===================================== */
 
 function capturePhoto() {
 
@@ -552,45 +1066,146 @@ function capturePhoto() {
 
 
     /*
-       Mirror image so the
-       saved photo matches
-       the camera preview.
+       Mirror the image.
     */
 
-    ctx.translate(width, 0);
+    ctx.save();
 
-    ctx.scale(-1, 1);
+    ctx.translate(
+        width,
+        0
+    );
+
+    ctx.scale(
+        -1,
+        1
+    );
 
 
     ctx.drawImage(
-
         video,
-
         0,
         0,
-
         width,
         height
+    );
 
+
+    ctx.restore();
+
+
+
+    /*
+       Convert the photo to
+       actual black & white.
+    */
+
+    const imageData =
+        ctx.getImageData(
+            0,
+            0,
+            width,
+            height
+        );
+
+
+    const pixels =
+        imageData.data;
+
+
+    for (
+        let i = 0;
+        i < pixels.length;
+        i += 4
+    ) {
+
+        const r =
+            pixels[i];
+
+        const g =
+            pixels[i + 1];
+
+        const b =
+            pixels[i + 2];
+
+
+        /*
+           Human-perception
+           grayscale calculation.
+        */
+
+        let gray =
+            0.299 * r +
+            0.587 * g +
+            0.114 * b;
+
+
+        /*
+           Slight contrast boost.
+        */
+
+        gray =
+            ((gray - 128) * 1.12) +
+            128;
+
+
+        /*
+           Tiny random film grain.
+        */
+
+        const grain =
+            (Math.random() - .5) * 8;
+
+
+        gray += grain;
+
+
+        gray =
+            Math.max(
+                0,
+                Math.min(
+                    255,
+                    gray
+                )
+            );
+
+
+        pixels[i] =
+            gray;
+
+        pixels[i + 1] =
+            gray;
+
+        pixels[i + 2] =
+            gray;
+
+    }
+
+
+    ctx.putImageData(
+        imageData,
+        0,
+        0
     );
 
 
     return canvas.toDataURL(
         "image/jpeg",
-        0.95
+        .92
     );
 
 }
 
 
 
-/* ==============================
-   TAKE 4 PHOTOS
-============================== */
+/* =====================================
+   TAKE FOUR PHOTOS
+===================================== */
 
 async function takePhotos() {
 
     takeButton.disabled = true;
+
 
     capturedPhotos = [];
 
@@ -602,22 +1217,40 @@ async function takePhotos() {
     ) {
 
         statusText.textContent =
-            `Photo ${i + 1} of 4 — get ready ♡`;
+            `frame ${i + 1} / 4  ⋆˚꩜｡`;
 
+
+        /*
+           Countdown
+        */
 
         await runCountdown(3);
 
+
+        /*
+           Take picture
+        */
 
         const photo =
             capturePhoto();
 
 
-        capturedPhotos.push(photo);
+        capturedPhotos.push(
+            photo
+        );
 
+
+        /*
+           Tiny pause before
+           next picture
+        */
 
         await new Promise(
             resolve =>
-                setTimeout(resolve, 800)
+                setTimeout(
+                    resolve,
+                    900
+                )
         );
 
     }
@@ -629,11 +1262,12 @@ async function takePhotos() {
 
 
 
-/* ==============================
-   DISPLAY STRIP
-============================== */
+/* =====================================
+   SHOW PHOTO STRIP
+===================================== */
 
 function showStrip() {
+
 
     for (
         let i = 0;
@@ -667,10 +1301,10 @@ function showStrip() {
         ).padStart(2, "0");
 
 
-    document.getElementById("date")
-        .textContent =
-        formattedDate +
-        "  ♡  MEMORIES";
+    document.getElementById(
+        "date"
+    ).textContent =
+        formattedDate;
 
 
     cameraSection
@@ -681,13 +1315,17 @@ function showStrip() {
     stripWrapper.style.display =
         "flex";
 
+
+    statusText.textContent =
+        "your roll is ready .✦ ݁˖";
+
 }
 
 
 
-/* ==============================
+/* =====================================
    RETAKE
-============================== */
+===================================== */
 
 retakeButton.addEventListener(
     "click",
@@ -710,39 +1348,60 @@ retakeButton.addEventListener(
 
 
         statusText.textContent =
-            "Ready for another strip ♡";
+            "ready when you are ⋆˚꩜｡";
 
     }
 );
 
 
 
-/* ==============================
-   DOWNLOAD STRIP
-============================== */
+/* =====================================
+   SAVE STRIP
+===================================== */
 
 downloadButton.addEventListener(
     "click",
     () => {
 
 
+        if (
+            capturedPhotos.length !== 4
+        ) {
+
+            return;
+
+        }
+
+
         const stripCanvas =
-            document.createElement("canvas");
+            document.createElement(
+                "canvas"
+            );
 
 
         const ctx =
-            stripCanvas.getContext("2d");
+            stripCanvas.getContext(
+                "2d"
+            );
 
+
+        /*
+           Strip dimensions
+        */
 
         const width = 700;
 
-        const photoHeight = 500;
+        const photoWidth =
+            width - 70;
+
+        const photoHeight =
+            520;
 
         const padding = 35;
 
-        const header = 80;
+        const header = 95;
 
-        const footer = 60;
+        const footer = 70;
 
 
         stripCanvas.width =
@@ -761,58 +1420,67 @@ downloadButton.addEventListener(
 
 
 
-        /* Background */
+        /*
+           Paper background
+        */
 
         ctx.fillStyle =
-            "#fffaf3";
+            "#faf9f4";
 
 
         ctx.fillRect(
-
             0,
             0,
-
-            stripCanvas.width,
+            width,
             stripCanvas.height
-
         );
 
 
 
-        /* Header */
+        /*
+           Header
+        */
 
         ctx.fillStyle =
-            "#3b3029";
-
-
-        ctx.font =
-            "bold 28px Georgia";
+            "#252525";
 
 
         ctx.textAlign =
             "center";
 
 
+        ctx.font =
+            "600 42px Caveat";
+
+
         ctx.fillText(
-
-            "PHOTO BOOTH ♡",
-
+            "photo booth",
             width / 2,
-
             50
+        );
 
+
+        ctx.font =
+            "12px monospace";
+
+
+        ctx.fillText(
+            "⋆˚꩜｡ DEVELOPED IN THE MOMENT",
+            width / 2,
+            76
         );
 
 
 
+        /*
+           Load photos one by one
+        */
+
         let loaded = 0;
 
 
-
         capturedPhotos.forEach(
-
             (src, index) => {
-
 
                 const img =
                     new Image();
@@ -834,15 +1502,9 @@ downloadButton.addEventListener(
                         );
 
 
-
-                    /* Vintage filter */
-
-                    ctx.save();
-
-
-                    ctx.filter =
-                        "sepia(18%) contrast(92%) saturate(75%)";
-
+                    /*
+                       Photo
+                    */
 
                     ctx.drawImage(
 
@@ -852,21 +1514,44 @@ downloadButton.addEventListener(
 
                         y,
 
-                        width -
-                        padding * 2,
+                        photoWidth,
 
                         photoHeight
 
                     );
 
 
-                    ctx.restore();
+                    /*
+                       Little frame line
+                    */
 
+                    ctx.strokeStyle =
+                        "#252525";
+
+                    ctx.lineWidth = 2;
+
+
+                    ctx.strokeRect(
+
+                        padding,
+
+                        y,
+
+                        photoWidth,
+
+                        photoHeight
+
+                    );
 
 
                     loaded++;
 
 
+
+                    /*
+                       Once all four
+                       photos are loaded
+                    */
 
                     if (
                         loaded === 4
@@ -894,18 +1579,45 @@ downloadButton.addEventListener(
 
 
 
+                        /*
+                           Footer
+                        */
+
                         ctx.fillStyle =
-                            "#3b3029";
+                            "#252525";
+
+
+                        ctx.textAlign =
+                            "left";
 
 
                         ctx.font =
-                            "18px Arial";
+                            "18px Caveat";
 
 
                         ctx.fillText(
 
-                            formattedDate +
-                            "  ♡  MEMORIES",
+                            formattedDate,
+
+                            padding,
+
+                            stripCanvas.height -
+                            25
+
+                        );
+
+
+                        ctx.textAlign =
+                            "center";
+
+
+                        ctx.font =
+                            "20px Caveat";
+
+
+                        ctx.fillText(
+
+                            ".✦ ݁˖",
 
                             width / 2,
 
@@ -915,15 +1627,39 @@ downloadButton.addEventListener(
                         );
 
 
+                        ctx.textAlign =
+                            "right";
 
-                        /* Download */
+
+                        ctx.font =
+                            "10px monospace";
+
+
+                        ctx.fillText(
+
+                            "ROLL 001",
+
+                            width - padding,
+
+                            stripCanvas.height -
+                            25
+
+                        );
+
+
+
+                        /*
+                           Create download
+                        */
 
                         const link =
-                            document.createElement("a");
+                            document.createElement(
+                                "a"
+                            );
 
 
                         link.download =
-                            "vintage-photobooth-strip.png";
+                            "photo-booth-roll.png";
 
 
                         link.href =
@@ -943,18 +1679,16 @@ downloadButton.addEventListener(
                     src;
 
             }
-
         );
 
     }
-
 );
 
 
 
-/* ==============================
-   BUTTONS
-============================== */
+/* =====================================
+   BUTTON EVENTS
+===================================== */
 
 startButton.addEventListener(
     "click",
@@ -971,5 +1705,3 @@ takeButton.addEventListener(
 
 </body>
 </html>
-```
-
