@@ -6,7 +6,6 @@
 
 <title>⋆˚꩜｡ yenvy's booth</title>
 
-<!-- Handwritten fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -419,7 +418,7 @@ button:disabled {
 
 
 /* =====================================
-   STRIP
+   PHOTO STRIP
 ===================================== */
 
 .strip-wrapper {
@@ -656,7 +655,6 @@ canvas {
     </div>
 
 
-
     <!-- CAMERA -->
 
     <div class="camera-area">
@@ -820,10 +818,6 @@ canvas {
         → pose
         → wait for the click
         → repeat
-
-        <br>
-
-        ❀.ೃ࿔*:･ make something worth remembering .✦ ݁˖
 
     </div>
 
@@ -1095,9 +1089,7 @@ function capturePhoto() {
         );
 
 
-    /*
-       Mirror image
-    */
+    /* Mirror image */
 
     ctx.save();
 
@@ -1131,10 +1123,7 @@ function capturePhoto() {
 
 
 
-    /*
-       Convert to actual
-       black and white
-    */
+    /* Convert to black & white */
 
     const imageData =
         ctx.getImageData(
@@ -1180,18 +1169,14 @@ function capturePhoto() {
             0.114 * b;
 
 
-        /*
-           Contrast
-        */
+        /* Contrast */
 
         gray =
             ((gray - 128) * 1.12) +
             128;
 
 
-        /*
-           Film grain
-        */
+        /* Film grain */
 
         const grain =
             (Math.random() - .5) * 8;
@@ -1471,9 +1456,7 @@ downloadButton.addEventListener(
 
 
 
-        /*
-           Paper
-        */
+        /* Paper */
 
         ctx.fillStyle =
             "#faf9f4";
@@ -1491,9 +1474,7 @@ downloadButton.addEventListener(
 
 
 
-        /*
-           Header
-        */
+        /* Header */
 
         ctx.fillStyle =
             "#252525";
@@ -1578,9 +1559,7 @@ downloadButton.addEventListener(
                         );
 
 
-                        /*
-                           Photo border
-                        */
+                        /* Photo border */
 
                         ctx.strokeStyle =
                             "#252525";
@@ -1639,9 +1618,7 @@ downloadButton.addEventListener(
 
 
 
-                            /*
-                               Footer
-                            */
+                            /* Footer */
 
                             ctx.fillStyle =
                                 "#252525";
@@ -1708,9 +1685,7 @@ downloadButton.addEventListener(
 
 
 
-                            /*
-                               Download
-                            */
+                            /* Download */
 
                             const link =
                                 document.createElement(
@@ -1766,5 +1741,4 @@ takeButton.addEventListener(
 </script>
 
 </body>
-</html>
 </html>
