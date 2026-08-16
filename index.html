@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>⋆˚꩜｡ photo booth</title>
+<title>⋆˚꩜｡ yenvy's booth</title>
 
 <!-- Handwritten fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,7 @@ body {
 
 
 /* =====================================
-   LITTLE DOODLES
+   DOODLES
 ===================================== */
 
 .doodle {
@@ -163,14 +163,6 @@ h1 {
     transform: rotate(1deg);
 }
 
-.subtitle span {
-    font-family: "DM Mono", monospace;
-
-    font-size: 11px;
-
-    letter-spacing: 1px;
-}
-
 
 /* =====================================
    CAMERA LAYOUT
@@ -216,7 +208,7 @@ h1 {
 }
 
 
-/* little tape */
+/* Tape */
 
 .camera-frame::before {
     content: "";
@@ -241,6 +233,8 @@ h1 {
 }
 
 
+/* Camera */
+
 video {
     width: 100%;
 
@@ -254,7 +248,6 @@ video {
 
     transform: scaleX(-1);
 
-    /* actual black and white preview */
     filter:
         grayscale(1)
         contrast(1.08)
@@ -392,6 +385,11 @@ button:disabled {
     box-shadow: none;
 }
 
+
+/* =====================================
+   STATUS
+===================================== */
+
 .status {
     margin-top: 15px;
 
@@ -404,7 +402,7 @@ button:disabled {
 
 
 /* =====================================
-   LITTLE INSTRUCTIONS
+   INSTRUCTIONS
 ===================================== */
 
 .instructions {
@@ -437,7 +435,7 @@ button:disabled {
 }
 
 
-/* tape on strip */
+/* Tape on strip */
 
 .strip-container::before {
     content: "";
@@ -588,7 +586,7 @@ canvas {
 
 
 /* =====================================
-   RESPONSIVE
+   MOBILE
 ===================================== */
 
 @media (max-width: 700px) {
@@ -624,7 +622,7 @@ canvas {
 <div class="booth">
 
 
-    <!-- FLOATING DOODLES -->
+    <!-- DOODLES -->
 
     <div class="doodle one">
         .✦ ݁˖
@@ -650,27 +648,24 @@ canvas {
     </div>
 
     <h1>
-        photo booth
+        yenvy's booth
     </h1>
 
     <div class="subtitle">
-        tiny memories, four frames
-        <br>
-        <span>⋆˚꩜｡ black & white edition</span>
+        ⋆˚꩜｡ black & white edition
     </div>
 
 
 
+    <!-- CAMERA -->
+
     <div class="camera-area">
 
-
-        <!-- =============================
-             CAMERA
-        ============================== -->
 
         <div
             id="cameraSection"
             class="camera-section">
+
 
             <div class="camera-frame">
 
@@ -680,10 +675,13 @@ canvas {
                     playsinline>
                 </video>
 
+
                 <div
                     id="countdown"
                     class="countdown">
+
                     3
+
                 </div>
 
             </div>
@@ -700,10 +698,13 @@ canvas {
                     start ˚₊‧
                 </button>
 
+
                 <button
                     id="takeButton"
                     disabled>
+
                     take 4 photos
+
                 </button>
 
             </div>
@@ -721,15 +722,15 @@ canvas {
 
 
 
-        <!-- =============================
-             PHOTO STRIP
-        ============================== -->
+        <!-- PHOTO STRIP -->
 
         <div
             id="stripWrapper"
             class="strip-wrapper">
 
+
             <div class="strip-container">
+
 
                 <div class="strip">
 
@@ -737,8 +738,9 @@ canvas {
                     <div class="strip-header">
 
                         <div class="strip-title">
-                            photo booth
+                            yenvy's booth
                         </div>
+
 
                         <div class="strip-subtitle">
                             ⋆˚꩜｡ DEVELOPED IN THE MOMENT
@@ -775,9 +777,11 @@ canvas {
 
                         <span id="date"></span>
 
+
                         <span class="doodle-mark">
                             .✦ ݁˖
                         </span>
+
 
                         <span>
                             ROLL 001
@@ -794,6 +798,7 @@ canvas {
                         ↻ retake
                     </button>
 
+
                     <button id="downloadButton">
                         ↓ save strip
                     </button>
@@ -807,13 +812,17 @@ canvas {
     </div>
 
 
+    <!-- INSTRUCTIONS -->
+
     <div class="instructions">
 
         allow camera access
         → pose
         → wait for the click
         → repeat
+
         <br>
+
         ❀.ೃ࿔*:･ make something worth remembering .✦ ݁˖
 
     </div>
@@ -889,9 +898,6 @@ let capturedPhotos = [];
 
 async function startCamera() {
 
-    /*
-       Check if browser supports camera
-    */
 
     if (
         !navigator.mediaDevices ||
@@ -907,10 +913,12 @@ async function startCamera() {
 
     try {
 
+
         stream =
             await navigator.mediaDevices.getUserMedia({
 
                 video: {
+
                     width: {
                         ideal: 1280
                     },
@@ -920,6 +928,7 @@ async function startCamera() {
                     },
 
                     facingMode: "user"
+
                 },
 
                 audio: false
@@ -927,15 +936,19 @@ async function startCamera() {
             });
 
 
-        video.srcObject = stream;
+        video.srcObject =
+            stream;
 
 
         await video.play();
 
 
-        startButton.disabled = true;
+        startButton.disabled =
+            true;
 
-        takeButton.disabled = false;
+
+        takeButton.disabled =
+            false;
 
 
         statusText.textContent =
@@ -945,6 +958,7 @@ async function startCamera() {
 
 
     catch (error) {
+
 
         console.error(
             "Camera error:",
@@ -962,6 +976,7 @@ async function startCamera() {
 
         }
 
+
         else if (
             error.name ===
             "NotFoundError"
@@ -971,6 +986,7 @@ async function startCamera() {
                 "no camera found on this device.";
 
         }
+
 
         else {
 
@@ -993,11 +1009,14 @@ function runCountdown(seconds) {
 
     return new Promise(resolve => {
 
-        let number = seconds;
+
+        let number =
+            seconds;
 
 
         countdown.textContent =
             number;
+
 
         countdown.classList.add(
             "show"
@@ -1007,10 +1026,14 @@ function runCountdown(seconds) {
         const interval =
             setInterval(() => {
 
+
                 number--;
 
 
-                if (number <= 0) {
+                if (
+                    number <= 0
+                ) {
+
 
                     clearInterval(
                         interval
@@ -1026,7 +1049,9 @@ function runCountdown(seconds) {
 
                 }
 
+
                 else {
+
 
                     countdown.textContent =
                         number;
@@ -1042,13 +1067,15 @@ function runCountdown(seconds) {
 
 
 /* =====================================
-   BLACK & WHITE PHOTO
+   CAPTURE PHOTO
 ===================================== */
 
 function capturePhoto() {
 
+
     const width =
         video.videoWidth;
+
 
     const height =
         video.videoHeight;
@@ -1057,24 +1084,29 @@ function capturePhoto() {
     canvas.width =
         width;
 
+
     canvas.height =
         height;
 
 
     const ctx =
-        canvas.getContext("2d");
+        canvas.getContext(
+            "2d"
+        );
 
 
     /*
-       Mirror the image.
+       Mirror image
     */
 
     ctx.save();
+
 
     ctx.translate(
         width,
         0
     );
+
 
     ctx.scale(
         -1,
@@ -1083,11 +1115,15 @@ function capturePhoto() {
 
 
     ctx.drawImage(
+
         video,
+
         0,
         0,
+
         width,
         height
+
     );
 
 
@@ -1096,16 +1132,19 @@ function capturePhoto() {
 
 
     /*
-       Convert the photo to
-       actual black & white.
+       Convert to actual
+       black and white
     */
 
     const imageData =
         ctx.getImageData(
+
             0,
             0,
+
             width,
             height
+
         );
 
 
@@ -1119,29 +1158,30 @@ function capturePhoto() {
         i += 4
     ) {
 
+
         const r =
             pixels[i];
 
+
         const g =
             pixels[i + 1];
+
 
         const b =
             pixels[i + 2];
 
 
-        /*
-           Human-perception
-           grayscale calculation.
-        */
-
         let gray =
+
             0.299 * r +
+
             0.587 * g +
+
             0.114 * b;
 
 
         /*
-           Slight contrast boost.
+           Contrast
         */
 
         gray =
@@ -1150,7 +1190,7 @@ function capturePhoto() {
 
 
         /*
-           Tiny random film grain.
+           Film grain
         */
 
         const grain =
@@ -1173,8 +1213,10 @@ function capturePhoto() {
         pixels[i] =
             gray;
 
+
         pixels[i + 1] =
             gray;
+
 
         pixels[i + 2] =
             gray;
@@ -1204,7 +1246,9 @@ function capturePhoto() {
 
 async function takePhotos() {
 
-    takeButton.disabled = true;
+
+    takeButton.disabled =
+        true;
 
 
     capturedPhotos = [];
@@ -1216,20 +1260,15 @@ async function takePhotos() {
         i++
     ) {
 
+
         statusText.textContent =
             `frame ${i + 1} / 4  ⋆˚꩜｡`;
 
 
-        /*
-           Countdown
-        */
+        await runCountdown(
+            3
+        );
 
-        await runCountdown(3);
-
-
-        /*
-           Take picture
-        */
 
         const photo =
             capturePhoto();
@@ -1239,11 +1278,6 @@ async function takePhotos() {
             photo
         );
 
-
-        /*
-           Tiny pause before
-           next picture
-        */
 
         await new Promise(
             resolve =>
@@ -1263,7 +1297,7 @@ async function takePhotos() {
 
 
 /* =====================================
-   SHOW PHOTO STRIP
+   SHOW STRIP
 ===================================== */
 
 function showStrip() {
@@ -1288,17 +1322,24 @@ function showStrip() {
     const formattedDate =
 
         today.getFullYear() +
+
         "." +
 
         String(
             today.getMonth() + 1
-        ).padStart(2, "0") +
+        ).padStart(
+            2,
+            "0"
+        ) +
 
         "." +
 
         String(
             today.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     document.getElementById(
@@ -1309,7 +1350,9 @@ function showStrip() {
 
     cameraSection
         .classList
-        .add("hidden");
+        .add(
+            "hidden"
+        );
 
 
     stripWrapper.style.display =
@@ -1331,6 +1374,7 @@ retakeButton.addEventListener(
     "click",
     () => {
 
+
         capturedPhotos = [];
 
 
@@ -1340,7 +1384,9 @@ retakeButton.addEventListener(
 
         cameraSection
             .classList
-            .remove("hidden");
+            .remove(
+                "hidden"
+            );
 
 
         takeButton.disabled =
@@ -1385,23 +1431,28 @@ downloadButton.addEventListener(
             );
 
 
-        /*
-           Strip dimensions
-        */
+        const width =
+            700;
 
-        const width = 700;
 
         const photoWidth =
             width - 70;
 
+
         const photoHeight =
             520;
 
-        const padding = 35;
 
-        const header = 95;
+        const padding =
+            35;
 
-        const footer = 70;
+
+        const header =
+            95;
+
+
+        const footer =
+            70;
 
 
         stripCanvas.width =
@@ -1421,7 +1472,7 @@ downloadButton.addEventListener(
 
 
         /*
-           Paper background
+           Paper
         */
 
         ctx.fillStyle =
@@ -1429,10 +1480,13 @@ downloadButton.addEventListener(
 
 
         ctx.fillRect(
+
             0,
             0,
+
             width,
             stripCanvas.height
+
         );
 
 
@@ -1454,9 +1508,13 @@ downloadButton.addEventListener(
 
 
         ctx.fillText(
-            "photo booth",
+
+            "yenvy's booth",
+
             width / 2,
+
             50
+
         );
 
 
@@ -1465,229 +1523,233 @@ downloadButton.addEventListener(
 
 
         ctx.fillText(
+
             "⋆˚꩜｡ DEVELOPED IN THE MOMENT",
+
             width / 2,
+
             76
+
         );
 
 
 
-        /*
-           Load photos one by one
-        */
-
-        let loaded = 0;
+        let loaded =
+            0;
 
 
         capturedPhotos.forEach(
             (src, index) => {
 
+
                 const img =
                     new Image();
 
 
-                img.onload = () => {
+                img.onload =
+                    () => {
 
 
-                    const y =
+                        const y =
 
-                        header +
+                            header +
 
-                        padding +
+                            padding +
 
-                        index *
-                        (
-                            photoHeight +
-                            padding
-                        );
-
-
-                    /*
-                       Photo
-                    */
-
-                    ctx.drawImage(
-
-                        img,
-
-                        padding,
-
-                        y,
-
-                        photoWidth,
-
-                        photoHeight
-
-                    );
+                            index *
+                            (
+                                photoHeight +
+                                padding
+                            );
 
 
-                    /*
-                       Little frame line
-                    */
+                        ctx.drawImage(
 
-                    ctx.strokeStyle =
-                        "#252525";
-
-                    ctx.lineWidth = 2;
-
-
-                    ctx.strokeRect(
-
-                        padding,
-
-                        y,
-
-                        photoWidth,
-
-                        photoHeight
-
-                    );
-
-
-                    loaded++;
-
-
-
-                    /*
-                       Once all four
-                       photos are loaded
-                    */
-
-                    if (
-                        loaded === 4
-                    ) {
-
-
-                        const date =
-                            new Date();
-
-
-                        const formattedDate =
-
-                            date.getFullYear() +
-                            "." +
-
-                            String(
-                                date.getMonth() + 1
-                            ).padStart(2, "0") +
-
-                            "." +
-
-                            String(
-                                date.getDate()
-                            ).padStart(2, "0");
-
-
-
-                        /*
-                           Footer
-                        */
-
-                        ctx.fillStyle =
-                            "#252525";
-
-
-                        ctx.textAlign =
-                            "left";
-
-
-                        ctx.font =
-                            "18px Caveat";
-
-
-                        ctx.fillText(
-
-                            formattedDate,
+                            img,
 
                             padding,
 
-                            stripCanvas.height -
-                            25
+                            y,
+
+                            photoWidth,
+
+                            photoHeight
 
                         );
-
-
-                        ctx.textAlign =
-                            "center";
-
-
-                        ctx.font =
-                            "20px Caveat";
-
-
-                        ctx.fillText(
-
-                            ".✦ ݁˖",
-
-                            width / 2,
-
-                            stripCanvas.height -
-                            25
-
-                        );
-
-
-                        ctx.textAlign =
-                            "right";
-
-
-                        ctx.font =
-                            "10px monospace";
-
-
-                        ctx.fillText(
-
-                            "ROLL 001",
-
-                            width - padding,
-
-                            stripCanvas.height -
-                            25
-
-                        );
-
 
 
                         /*
-                           Create download
+                           Photo border
                         */
 
-                        const link =
-                            document.createElement(
-                                "a"
+                        ctx.strokeStyle =
+                            "#252525";
+
+
+                        ctx.lineWidth =
+                            2;
+
+
+                        ctx.strokeRect(
+
+                            padding,
+
+                            y,
+
+                            photoWidth,
+
+                            photoHeight
+
+                        );
+
+
+                        loaded++;
+
+
+                        if (
+                            loaded === 4
+                        ) {
+
+
+                            const date =
+                                new Date();
+
+
+                            const formattedDate =
+
+                                date.getFullYear() +
+
+                                "." +
+
+                                String(
+                                    date.getMonth() + 1
+                                ).padStart(
+                                    2,
+                                    "0"
+                                ) +
+
+                                "." +
+
+                                String(
+                                    date.getDate()
+                                ).padStart(
+                                    2,
+                                    "0"
+                                );
+
+
+
+                            /*
+                               Footer
+                            */
+
+                            ctx.fillStyle =
+                                "#252525";
+
+
+                            ctx.textAlign =
+                                "left";
+
+
+                            ctx.font =
+                                "18px Caveat";
+
+
+                            ctx.fillText(
+
+                                formattedDate,
+
+                                padding,
+
+                                stripCanvas.height -
+                                25
+
                             );
 
 
-                        link.download =
-                            "photo-booth-roll.png";
+                            ctx.textAlign =
+                                "center";
 
 
-                        link.href =
-                            stripCanvas.toDataURL(
-                                "image/png"
+                            ctx.font =
+                                "20px Caveat";
+
+
+                            ctx.fillText(
+
+                                ".✦ ݁˖",
+
+                                width / 2,
+
+                                stripCanvas.height -
+                                25
+
                             );
 
 
-                        link.click();
+                            ctx.textAlign =
+                                "right";
 
-                    }
 
-                };
+                            ctx.font =
+                                "10px monospace";
+
+
+                            ctx.fillText(
+
+                                "ROLL 001",
+
+                                width - padding,
+
+                                stripCanvas.height -
+                                25
+
+                            );
+
+
+
+                            /*
+                               Download
+                            */
+
+                            const link =
+                                document.createElement(
+                                    "a"
+                                );
+
+
+                            link.download =
+                                "yenvys-booth.png";
+
+
+                            link.href =
+                                stripCanvas.toDataURL(
+                                    "image/png"
+                                );
+
+
+                            link.click();
+
+                        }
+
+                    };
 
 
                 img.src =
                     src;
 
             }
+
         );
 
     }
+
 );
 
 
 
 /* =====================================
-   BUTTON EVENTS
+   BUTTONS
 ===================================== */
 
 startButton.addEventListener(
@@ -1704,4 +1766,5 @@ takeButton.addEventListener(
 </script>
 
 </body>
+</html>
 </html>
