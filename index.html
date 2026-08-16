@@ -1,36 +1,975 @@
-<html>
+```html
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Comic Sans</title>
-  <style>
-    body {
-      background-color: hotpink;
-      padding: 25px;
-    }
-    p {
-      color: dodgerblue;
-      font-size: 30px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vintage Photo Booth ♡</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #eee7df;
+    color: #3b3029;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.booth {
+    width: 100%;
+    max-width: 1100px;
+    text-align: center;
+}
+
+h1 {
+    font-family: Georgia, serif;
+    font-size: 48px;
+    margin: 0;
+    letter-spacing: 3px;
+}
+
+.subtitle {
+    margin: 8px 0 30px;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.camera-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.camera-container {
+    position: relative;
+    width: 550px;
+    max-width: 90vw;
+    background: #211c19;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.2);
+}
+
+video {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+
+    /* Mirror the camera like a real selfie camera */
+    transform: scaleX(-1);
+
+    /* Vintage look */
+    filter: sepia(.15)
+            contrast(.95)
+            saturate(.8);
+}
+
+.countdown {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 110px;
+    font-weight: bold;
+
+    text-shadow: 0 4px 20px black;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.countdown.show {
+    opacity: 1;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    border: none;
+    padding: 14px 28px;
+
+    border-radius: 30px;
+
+    background: #3b3029;
+    color: white;
+
+    font-size: 13px;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+button:hover {
+    background: #5a4940;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.status {
+    margin-top: 14px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.instructions {
+    margin-top: 25px;
+    font-size: 12px;
+    opacity: .65;
+}
+
+/* PHOTO STRIP */
+
+.strip-wrapper {
+    display: none;
+    justify-content: center;
+}
+
+.strip {
+    width: 240px;
+
+    background: #fffaf3;
+
+    padding: 14px 14px 20px;
+
+    box-shadow: 0 15px 35px rgba(0,0,0,.2);
+}
+
+.strip-title {
+    font-family: Georgia, serif;
+    font-size: 17px;
+    letter-spacing: 2px;
+
+    margin-bottom: 12px;
+}
+
+.photo {
+    width: 100%;
+
+    aspect-ratio: 1 / .75;
+
+    object-fit: cover;
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    filter:
+        sepia(.18)
+        contrast(.92)
+        saturate(.75);
+}
+
+.strip-date {
+    margin-top: 10px;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+canvas {
+    display: none;
+}
+
+@media (max-width: 700px) {
+
     h1 {
-      color: green;
-      font-size: 200px;
+        font-size: 34px;
     }
-    span {
-      color: orange;
-      text-transform: uppercase; 
-      font-size: 100px;
+
+    .camera-container {
+        width: 95vw;
     }
-    div {
-      color: red;
-      font-size: 75px;
-      transform: rotate(35deg);
-      margin-top: 300px;
+
+    .camera-area {
+        gap: 25px;
     }
-  </style>
+}
+</style>
 </head>
-  <body>
-    <h1>Ban Cosmic Sans</h1>
-    <div>No, really!!!</div>
-    <p>Comic Sans should be <span>banned</span>.</p>
-   <p>We believe in the gospel message “ban comic sans.” <br> <a href="https://1000manifestos.com/ban-comic-sans/">It shall be salvation to all who are literate.</a>a</p>
-  </body>
+
+
+<body>
+
+<div class="booth">
+
+    <h1>VINTAGE BOOTH</h1>
+
+    <div class="subtitle">
+        ♡ step inside ♡
+    </div>
+
+
+    <div class="camera-area">
+
+
+        <!-- CAMERA SCREEN -->
+
+        <div id="cameraSection">
+
+            <div class="camera-container">
+
+                <video
+                    id="video"
+                    autoplay
+                    playsinline>
+                </video>
+
+                <div
+                    id="countdown"
+                    class="countdown">
+                    3
+                </div>
+
+            </div>
+
+
+            <div class="controls">
+
+                <button id="startButton">
+                    START BOOTH
+                </button>
+
+                <button
+                    id="takeButton"
+                    disabled>
+
+                    TAKE PHOTOS
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="status"
+                class="status">
+
+                Camera ready ♡
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FINISHED PHOTO STRIP -->
+
+        <div
+            id="stripWrapper"
+            class="strip-wrapper">
+
+            <div>
+
+                <div
+                    id="strip"
+                    class="strip">
+
+                    <div class="strip-title">
+                        PHOTO BOOTH ♡
+                    </div>
+
+
+                    <img
+                        id="photo1"
+                        class="photo">
+
+
+                    <img
+                        id="photo2"
+                        class="photo">
+
+
+                    <img
+                        id="photo3"
+                        class="photo">
+
+
+                    <img
+                        id="photo4"
+                        class="photo">
+
+
+                    <div
+                        id="date"
+                        class="strip-date">
+                    </div>
+
+                </div>
+
+
+                <div class="controls">
+
+                    <button id="retakeButton">
+                        RETAKE
+                    </button>
+
+                    <button id="downloadButton">
+                        SAVE STRIP
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="instructions">
+
+        Allow camera access →
+        press START →
+        pose 4 times →
+        save your strip ♡
+
+    </div>
+
+</div>
+
+
+
+<!-- Canvas used to capture photos -->
+
+<canvas id="canvas"></canvas>
+
+
+
+<script>
+
+/* ==============================
+   ELEMENTS
+============================== */
+
+const video =
+    document.getElementById("video");
+
+const canvas =
+    document.getElementById("canvas");
+
+const countdown =
+    document.getElementById("countdown");
+
+const startButton =
+    document.getElementById("startButton");
+
+const takeButton =
+    document.getElementById("takeButton");
+
+const statusText =
+    document.getElementById("status");
+
+const cameraSection =
+    document.getElementById("cameraSection");
+
+const stripWrapper =
+    document.getElementById("stripWrapper");
+
+const retakeButton =
+    document.getElementById("retakeButton");
+
+const downloadButton =
+    document.getElementById("downloadButton");
+
+
+const photos = [
+
+    document.getElementById("photo1"),
+
+    document.getElementById("photo2"),
+
+    document.getElementById("photo3"),
+
+    document.getElementById("photo4")
+
+];
+
+
+let stream = null;
+
+let capturedPhotos = [];
+
+
+
+/* ==============================
+   START CAMERA
+============================== */
+
+async function startCamera() {
+
+    try {
+
+        stream =
+            await navigator.mediaDevices
+            .getUserMedia({
+
+                video: {
+
+                    width: {
+                        ideal: 1280
+                    },
+
+                    height: {
+                        ideal: 720
+                    },
+
+                    facingMode: "user"
+
+                },
+
+                audio: false
+
+            });
+
+
+        video.srcObject = stream;
+
+
+        startButton.disabled = true;
+
+        takeButton.disabled = false;
+
+
+        statusText.textContent =
+            "Camera connected ♡ Press TAKE PHOTOS";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        statusText.textContent =
+            "Please allow camera access and refresh the page.";
+
+    }
+
+}
+
+
+
+/* ==============================
+   COUNTDOWN
+============================== */
+
+function runCountdown(seconds) {
+
+    return new Promise(resolve => {
+
+        let number = seconds;
+
+
+        countdown.textContent =
+            number;
+
+        countdown.classList.add("show");
+
+
+        const interval =
+            setInterval(() => {
+
+                number--;
+
+
+                if (number <= 0) {
+
+                    clearInterval(interval);
+
+                    countdown.classList.remove("show");
+
+                    resolve();
+
+                }
+
+                else {
+
+                    countdown.textContent =
+                        number;
+
+                }
+
+            }, 1000);
+
+    });
+
+}
+
+
+
+/* ==============================
+   CAPTURE PHOTO
+============================== */
+
+function capturePhoto() {
+
+    const width =
+        video.videoWidth;
+
+    const height =
+        video.videoHeight;
+
+
+    canvas.width =
+        width;
+
+    canvas.height =
+        height;
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    /*
+       Mirror image so the
+       saved photo matches
+       the camera preview.
+    */
+
+    ctx.translate(width, 0);
+
+    ctx.scale(-1, 1);
+
+
+    ctx.drawImage(
+
+        video,
+
+        0,
+        0,
+
+        width,
+        height
+
+    );
+
+
+    return canvas.toDataURL(
+        "image/jpeg",
+        0.95
+    );
+
+}
+
+
+
+/* ==============================
+   TAKE 4 PHOTOS
+============================== */
+
+async function takePhotos() {
+
+    takeButton.disabled = true;
+
+    capturedPhotos = [];
+
+
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
+
+        statusText.textContent =
+            `Photo ${i + 1} of 4 — get ready ♡`;
+
+
+        await runCountdown(3);
+
+
+        const photo =
+            capturePhoto();
+
+
+        capturedPhotos.push(photo);
+
+
+        await new Promise(
+            resolve =>
+                setTimeout(resolve, 800)
+        );
+
+    }
+
+
+    showStrip();
+
+}
+
+
+
+/* ==============================
+   DISPLAY STRIP
+============================== */
+
+function showStrip() {
+
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
+
+        photos[i].src =
+            capturedPhotos[i];
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    const formattedDate =
+
+        today.getFullYear() +
+        "." +
+
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0") +
+
+        "." +
+
+        String(
+            today.getDate()
+        ).padStart(2, "0");
+
+
+    document.getElementById("date")
+        .textContent =
+        formattedDate +
+        "  ♡  MEMORIES";
+
+
+    cameraSection
+        .classList
+        .add("hidden");
+
+
+    stripWrapper.style.display =
+        "flex";
+
+}
+
+
+
+/* ==============================
+   RETAKE
+============================== */
+
+retakeButton.addEventListener(
+    "click",
+    () => {
+
+        capturedPhotos = [];
+
+
+        stripWrapper.style.display =
+            "none";
+
+
+        cameraSection
+            .classList
+            .remove("hidden");
+
+
+        takeButton.disabled =
+            false;
+
+
+        statusText.textContent =
+            "Ready for another strip ♡";
+
+    }
+);
+
+
+
+/* ==============================
+   DOWNLOAD STRIP
+============================== */
+
+downloadButton.addEventListener(
+    "click",
+    () => {
+
+
+        const stripCanvas =
+            document.createElement("canvas");
+
+
+        const ctx =
+            stripCanvas.getContext("2d");
+
+
+        const width = 700;
+
+        const photoHeight = 500;
+
+        const padding = 35;
+
+        const header = 80;
+
+        const footer = 60;
+
+
+        stripCanvas.width =
+            width;
+
+
+        stripCanvas.height =
+
+            header +
+
+            (photoHeight * 4) +
+
+            (padding * 5) +
+
+            footer;
+
+
+
+        /* Background */
+
+        ctx.fillStyle =
+            "#fffaf3";
+
+
+        ctx.fillRect(
+
+            0,
+            0,
+
+            stripCanvas.width,
+            stripCanvas.height
+
+        );
+
+
+
+        /* Header */
+
+        ctx.fillStyle =
+            "#3b3029";
+
+
+        ctx.font =
+            "bold 28px Georgia";
+
+
+        ctx.textAlign =
+            "center";
+
+
+        ctx.fillText(
+
+            "PHOTO BOOTH ♡",
+
+            width / 2,
+
+            50
+
+        );
+
+
+
+        let loaded = 0;
+
+
+
+        capturedPhotos.forEach(
+
+            (src, index) => {
+
+
+                const img =
+                    new Image();
+
+
+                img.onload = () => {
+
+
+                    const y =
+
+                        header +
+
+                        padding +
+
+                        index *
+                        (
+                            photoHeight +
+                            padding
+                        );
+
+
+
+                    /* Vintage filter */
+
+                    ctx.save();
+
+
+                    ctx.filter =
+                        "sepia(18%) contrast(92%) saturate(75%)";
+
+
+                    ctx.drawImage(
+
+                        img,
+
+                        padding,
+
+                        y,
+
+                        width -
+                        padding * 2,
+
+                        photoHeight
+
+                    );
+
+
+                    ctx.restore();
+
+
+
+                    loaded++;
+
+
+
+                    if (
+                        loaded === 4
+                    ) {
+
+
+                        const date =
+                            new Date();
+
+
+                        const formattedDate =
+
+                            date.getFullYear() +
+                            "." +
+
+                            String(
+                                date.getMonth() + 1
+                            ).padStart(2, "0") +
+
+                            "." +
+
+                            String(
+                                date.getDate()
+                            ).padStart(2, "0");
+
+
+
+                        ctx.fillStyle =
+                            "#3b3029";
+
+
+                        ctx.font =
+                            "18px Arial";
+
+
+                        ctx.fillText(
+
+                            formattedDate +
+                            "  ♡  MEMORIES",
+
+                            width / 2,
+
+                            stripCanvas.height -
+                            25
+
+                        );
+
+
+
+                        /* Download */
+
+                        const link =
+                            document.createElement("a");
+
+
+                        link.download =
+                            "vintage-photobooth-strip.png";
+
+
+                        link.href =
+                            stripCanvas.toDataURL(
+                                "image/png"
+                            );
+
+
+                        link.click();
+
+                    }
+
+                };
+
+
+                img.src =
+                    src;
+
+            }
+
+        );
+
+    }
+
+);
+
+
+
+/* ==============================
+   BUTTONS
+============================== */
+
+startButton.addEventListener(
+    "click",
+    startCamera
+);
+
+
+takeButton.addEventListener(
+    "click",
+    takePhotos
+);
+
+</script>
+
+</body>
 </html>
+```
+
